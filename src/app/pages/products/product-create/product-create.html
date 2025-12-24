@@ -1,0 +1,9 @@
+<h2>Créer un produit</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <input formControlName="title" placeholder="Titre" />
+  <input type="number" formControlName="price" placeholder="Prix" />
+  <textarea formControlName="description" placeholder="Description"></textarea>
+
+  <button type="submit">Créer</button>
+</form>

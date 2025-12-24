@@ -1,0 +1,11 @@
+<h2>{{ user.firstName }} {{ user.lastName }}</h2>
+<p>Email : {{ user.email }}</p>
+
+<h3>Posts de l'utilisateur</h3>
+<ul>
+  <li *ngFor="let post of posts">
+    <a [routerLink]="['/posts', post.id]">
+      {{ post.title }}
+    </a>
+  </li>
+</ul>

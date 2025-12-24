@@ -1,0 +1,9 @@
+<h2>Modifier produit</h2>
+
+<form [formGroup]="form" (ngSubmit)="update()">
+  <input formControlName="title" />
+  <input type="number" formControlName="price" />
+  <textarea formControlName="description"></textarea>
+
+  <button type="submit">Mettre à jour</button>
+</form>

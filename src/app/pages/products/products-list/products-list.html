@@ -1,0 +1,11 @@
+<h2>Produits</h2>
+
+<a routerLink="/products/new">➕ Ajouter un produit</a>
+
+<ul>
+  <li *ngFor="let product of products">
+    {{ product.title }} - {{ product.price }} €
+    <a [routerLink]="['/products', product.id]">Modifier</a>
+    <button (click)="deleteProduct(product.id)">Supprimer</button>
+  </li>
+</ul>
