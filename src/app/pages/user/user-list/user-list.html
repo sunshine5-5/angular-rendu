@@ -1,0 +1,15 @@
+<h2>Utilisateurs</h2>
+
+
+<p *ngIf="error" class="error">{{ error }}</p>
+
+<div class="grid" *ngIf=" !error">
+  <a
+    class="card"
+    *ngFor="let u of users"
+    [routerLink]="['/users', u.id]"
+  >
+    <h3>{{ u.firstName }} {{ u.lastName }}</h3>
+    <p class="muted">{{ u.email }}</p>
+  </a>
+</div>

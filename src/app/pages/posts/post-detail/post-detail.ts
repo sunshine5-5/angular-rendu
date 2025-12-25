@@ -6,11 +6,12 @@ import { UserService } from '../../../core/services/user';
 import { Post } from '../../../models/post';
 import { Comment } from '../../../models/comment';
 import { User } from '../../../models/user';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './post-detail.html',
   styleUrl: './post-detail.css'
 })

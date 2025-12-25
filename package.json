@@ -1,5 +1,5 @@
 {
-  "name": "projet-ang",
+  "name": "angular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:projet-ang": "node dist/projet-ang/server/server.mjs"
+    "serve:ssr:angular": "node dist/angular/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
@@ -26,7 +26,7 @@
   "dependencies": {
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
-    "@angular/core": "^17.3.12",
+    "@angular/core": "^21.0.0",
     "@angular/forms": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
     "@angular/platform-server": "^21.0.0",
@@ -39,7 +39,6 @@
   "devDependencies": {
     "@angular/build": "^21.0.3",
     "@angular/cli": "^21.0.3",
-    "@angular/cli": "^17.3.17",
     "@angular/compiler-cli": "^21.0.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",

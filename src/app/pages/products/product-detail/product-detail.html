@@ -1,8 +1,7 @@
-@if (loading) {
-  <p>Chargement...</p>
-} @else if (error) {
-  <p class="error">{{ error }}</p>
-} @else if (product) {
+
+<p *ngIf="error" class="error">{{ error }}</p>
+
+<div *ngIf="product && !loading">
   <div class="head">
     <h2>{{ product.title }}</h2>
     <a routerLink="/products">← Retour</a>
@@ -13,7 +12,7 @@
     <input formControlName="title" />
 
     <label>Description</label>
-    <textarea rows="4" formControlName="description"></textarea>
+    <textarea formControlName="description"></textarea>
 
     <label>Prix</label>
     <input type="number" formControlName="price" />
@@ -24,17 +23,17 @@
     <label>Catégorie</label>
     <input formControlName="category" />
 
-    <label>Thumbnail URL</label>
+    <label>Thumbnail</label>
     <input formControlName="thumbnail" />
 
     <div class="actions">
-      <button class="primary" type="submit" [disabled]="form.invalid || saving">
+      <button type="submit" [disabled]="form.invalid || saving">
         {{ saving ? 'Enregistrement...' : 'Modifier' }}
       </button>
 
-      <button class="danger" type="button" (click)="remove()">
+      <button type="button" class="danger" (click)="remove()">
         Supprimer
       </button>
     </div>
   </form>
-}
+</div>

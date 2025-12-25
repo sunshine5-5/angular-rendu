@@ -1,0 +1,6 @@
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{display:flex;gap:12px;align-items:center;padding:14px;border-radius:14px;border:1px solid #e7e7e7;background:#fff;text-decoration:none}
+.card:hover{transform:translateY(-2px);transition:.15s}
+.avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #f1f1f1}
+.muted{opacity:.7}
+.error{color:#c0392b}

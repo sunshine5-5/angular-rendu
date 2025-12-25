@@ -1,0 +1,18 @@
+<div class="top">
+  <h2>Produits</h2>
+  <a class="btn" routerLink="/products/new">+ Nouveau produit</a>
+</div>
+
+<p *ngIf="loading">Chargement...</p>
+<p *ngIf="error" class="error">{{ error }}</p>
+
+<div class="grid" *ngIf="!loading && !error">
+  <a
+    class="card"
+    *ngFor="let p of products"
+    [routerLink]="['/products', p.id]"
+  >
+    <h3>{{ p.title }}</h3>
+    <p class="muted">{{ p.price }} €</p>
+  </a>
+</div>

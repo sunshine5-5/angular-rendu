@@ -1,0 +1,7 @@
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.btn{padding:8px 12px;border-radius:10px;background:#0f62fe;color:#fff;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{display:flex;gap:12px;align-items:center;padding:14px;border-radius:14px;border:1px solid #e7e7e7;background:#fff;text-decoration:none}
+.thumb{width:64px;height:64px;border-radius:12px;object-fit:cover;border:1px solid #eee}
+.muted{opacity:.7}
+.error{color:#c0392b}

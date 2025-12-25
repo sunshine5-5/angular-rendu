@@ -1,35 +1,28 @@
-@if (loading) {
-  <p>Chargement...</p>
-} @else if (error) {
-  <p class="error">{{ error }}</p>
-} @else if (post) {
+<p *ngIf="loading">Chargement...</p>
+<p *ngIf="error" class="error">{{ error }}</p>
+
+<div *ngIf="post">
   <div class="card">
     <h2>{{ post.title }}</h2>
 
-    @if (author) {
-      <p class="muted">
-        Auteur :
-        <a [routerLink]="['/users', author.id]">
-          {{ author.firstName }} {{ author.lastName }}
-        </a>
-      </p>
-    }
+    <p class="muted" *ngIf="author">
+      Auteur :
+      <a [routerLink]="['/users', author.id]">
+        {{ author.firstName }} {{ author.lastName }}
+      </a>
+    </p>
 
-    <p class="body">{{ post.body }}</p>
+    <p>{{ post.body }}</p>
   </div>
 
   <h3>Commentaires</h3>
 
-  <div class="list">
-    @for (c of comments; track c.id) {
-      <div class="comment">
-        <p>{{ c.body }}</p>
-        <p class="muted">
-          — {{ c.user?.username }}
-        </p>
-      </div>
-    } @empty {
-      <p>Aucun commentaire.</p>
-    }
+  <div *ngIf="comments.length === 0">
+    Aucun commentaire.
   </div>
-}
+
+  <div *ngFor="let c of comments" class="card">
+    <p>{{ c.body }}</p>
+    <small class="muted">— {{ c.user.username }}</small>
+  </div>
+</div>

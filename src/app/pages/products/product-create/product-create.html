@@ -8,7 +8,7 @@
   <input formControlName="title" />
 
   <label>Description</label>
-  <textarea rows="4" formControlName="description"></textarea>
+  <textarea formControlName="description"></textarea>
 
   <label>Prix</label>
   <input type="number" formControlName="price" />
@@ -19,10 +19,12 @@
   <label>Catégorie</label>
   <input formControlName="category" />
 
-  <label>Thumbnail URL</label>
+  <label>Thumbnail</label>
   <input formControlName="thumbnail" />
 
-  <button class="primary" type="submit" [disabled]="form.invalid || saving">
-    {{ saving ? 'Création...' : 'Créer' }}
+  <button type="submit" [disabled]="form.invalid || loading">
+    {{ loading ? 'Création...' : 'Créer' }}
   </button>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
 </form>
