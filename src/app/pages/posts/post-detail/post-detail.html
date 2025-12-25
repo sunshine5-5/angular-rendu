@@ -1,10 +1,35 @@
-<h2>{{ post.title }}</h2>
-<p>{{ post.body }}</p>
+@if (loading) {
+  <p>Chargement...</p>
+} @else if (error) {
+  <p class="error">{{ error }}</p>
+} @else if (post) {
+  <div class="card">
+    <h2>{{ post.title }}</h2>
 
-<h3>Commentaires</h3>
-<ul>
-  <li *ngFor="let comment of comments">
-    <strong>{{ comment.user.username }} :</strong>
-    {{ comment.body }}
-  </li>
-</ul>
+    @if (author) {
+      <p class="muted">
+        Auteur :
+        <a [routerLink]="['/users', author.id]">
+          {{ author.firstName }} {{ author.lastName }}
+        </a>
+      </p>
+    }
+
+    <p class="body">{{ post.body }}</p>
+  </div>
+
+  <h3>Commentaires</h3>
+
+  <div class="list">
+    @for (c of comments; track c.id) {
+      <div class="comment">
+        <p>{{ c.body }}</p>
+        <p class="muted">
+          — {{ c.user?.username }}
+        </p>
+      </div>
+    } @empty {
+      <p>Aucun commentaire.</p>
+    }
+  </div>
+}

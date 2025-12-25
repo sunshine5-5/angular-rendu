@@ -1,0 +1,8 @@
+.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+form{background:#fff;border:1px solid #eee;border-radius:16px;padding:16px;max-width:560px}
+label{display:block;margin:10px 0 6px;font-weight:600}
+input,textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ddd}
+.actions{display:flex;gap:10px;margin-top:12px}
+.primary{background:#0f62fe;color:#fff;border-radius:12px;padding:10px 12px}
+.danger{background:#e74c3c;color:#fff;border-radius:12px;padding:10px 12px}
+.error{color:#c0392b}

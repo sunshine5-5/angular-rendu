@@ -1,9 +1,28 @@
-<h2>Créer un produit</h2>
+<div class="head">
+  <h2>Nouveau produit</h2>
+  <a routerLink="/products">← Retour</a>
+</div>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <input formControlName="title" placeholder="Titre" />
-  <input type="number" formControlName="price" placeholder="Prix" />
-  <textarea formControlName="description" placeholder="Description"></textarea>
+<form [formGroup]="form" (ngSubmit)="create()">
+  <label>Titre</label>
+  <input formControlName="title" />
 
-  <button type="submit">Créer</button>
+  <label>Description</label>
+  <textarea rows="4" formControlName="description"></textarea>
+
+  <label>Prix</label>
+  <input type="number" formControlName="price" />
+
+  <label>Marque</label>
+  <input formControlName="brand" />
+
+  <label>Catégorie</label>
+  <input formControlName="category" />
+
+  <label>Thumbnail URL</label>
+  <input formControlName="thumbnail" />
+
+  <button class="primary" type="submit" [disabled]="form.invalid || saving">
+    {{ saving ? 'Création...' : 'Créer' }}
+  </button>
 </form>

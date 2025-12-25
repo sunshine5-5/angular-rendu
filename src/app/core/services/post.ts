@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_URL } from '../api/api.config';
 import { Post } from '../../models/post';
 
-@Injectable({
-  providedIn: 'root'
-})
+type PostsResponse = { posts: Post[]; total: number; skip: number; limit: number };
+
+@Injectable({ providedIn: 'root' })
 export class PostService {
+  private baseUrl = 'https://dummyjson.com';
+
   constructor(private http: HttpClient) {}
 
-  // GET /posts
-  getPosts(): Observable<{ posts: Post[] }> {
-    return this.http.get<{ posts: Post[] }>(`${API_URL}/posts`);
+  getPosts(): Observable<PostsResponse> {
+    return this.http.get<PostsResponse>(`${this.baseUrl}/posts`);
   }
 
-  // GET /posts/{id}
   getPost(id: number): Observable<Post> {
-    return this.http.get<Post>(`${API_URL}/posts/${id}`);
+    return this.http.get<Post>(`${this.baseUrl}/posts/${id}`);
   }
 
-  // GET /posts?userId=X
-  getPostsByUser(userId: number): Observable<{ posts: Post[] }> {
-    return this.http.get<{ posts: Post[] }>(
-      `${API_URL}/posts?userId=${userId}`
-    );
+  getPostsByUser(userId: number): Observable<PostsResponse> {
+    return this.http.get<PostsResponse>(`${this.baseUrl}/posts/user/${userId}`);
+    // Alternative acceptée aussi: /posts?userId=X mais DummyJSON fournit /posts/user/X
   }
 }

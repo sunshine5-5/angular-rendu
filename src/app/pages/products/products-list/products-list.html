@@ -1,11 +1,22 @@
-<h2>Produits</h2>
+<div class="top">
+  <h2>Produits</h2>
+  <a class="btn" routerLink="/products/new">+ Nouveau produit</a>
+</div>
 
-<a routerLink="/products/new">➕ Ajouter un produit</a>
-
-<ul>
-  <li *ngFor="let product of products">
-    {{ product.title }} - {{ product.price }} €
-    <a [routerLink]="['/products', product.id]">Modifier</a>
-    <button (click)="deleteProduct(product.id)">Supprimer</button>
-  </li>
-</ul>
+@if (loading) {
+  <p>Chargement...</p>
+} @else if (error) {
+  <p class="error">{{ error }}</p>
+} @else {
+  <div class="grid">
+    @for (p of products; track p.id) {
+      <a class="card" [routerLink]="['/products', p.id]">
+        <img class="thumb" [src]="p.thumbnail" alt="thumb" />
+        <div>
+          <h3>{{ p.title }}</h3>
+          <p class="muted">{{ p.price }} €</p>
+        </div>
+      </a>
+    }
+  </div>
+}

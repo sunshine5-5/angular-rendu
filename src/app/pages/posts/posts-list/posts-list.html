@@ -1,13 +1,30 @@
-<h2>Liste des posts</h2>
+<h2>Tous les posts</h2>
 
-<ul>
-  <li *ngFor="let post of posts">
-    <a [routerLink]="['/posts', post.id]">
-      {{ post.title }}
-    </a>
-    —
-    <a [routerLink]="['/users', post.userId]">
-      Auteur
-    </a>
-  </li>
-</ul>
+@if (loading) {
+  <p>Chargement...</p>
+} @else if (error) {
+  <p class="error">{{ error }}</p>
+} @else {
+  <div class="list">
+    @for (p of posts; track p.id) {
+      <div class="card">
+        <h3>{{ p.title }}</h3>
+
+        @if (p.author) {
+          <p class="muted">
+            Auteur :
+            <a [routerLink]="['/users', p.author.id]">
+              {{ p.author.firstName }} {{ p.author.lastName }}
+            </a>
+          </p>
+        }
+
+        <p class="muted">{{ p.body }}</p>
+
+        <div class="actions">
+          <a [routerLink]="['/posts', p.id]">Voir détails</a>
+        </div>
+      </div>
+    }
+  </div>
+}

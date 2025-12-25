@@ -1,25 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { forkJoin } from 'rxjs';
 import { PostService } from '../../../core/services/post';
+import { UserService } from '../../../core/services/user';
 import { Post } from '../../../models/post';
+import { User } from '../../../models/user';
+
+type PostWithAuthor = Post & { author?: User };
 
 @Component({
   selector: 'app-posts-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './posts-list.html',
   styleUrl: './posts-list.css'
 })
 export class PostsListComponent implements OnInit {
-  posts: Post[] = [];
+  posts: PostWithAuthor[] = [];
+  loading = true;
+  error = '';
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe(res => {
-      this.posts = res.posts;
+    forkJoin({
+      postsRes: this.postService.getPosts(),
+      usersRes: this.userService.getUsers()
+    }).subscribe({
+      next: ({ postsRes, usersRes }) => {
+        const usersMap = new Map<number, User>();
+        usersRes.users.forEach((u) => usersMap.set(u.id, u));
+
+        this.posts = postsRes.posts.map((p) => ({
+          ...p,
+          author: usersMap.get(p.userId)
+        }));
+
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Erreur lors du chargement.';
+        this.loading = false;
+      }
     });
   }
 }

@@ -1,9 +1,19 @@
-<h2>Liste des utilisateurs</h2>
+<h2>Utilisateurs</h2>
 
-<ul>
-  <li *ngFor="let user of users">
-    <a [routerLink]="['/users', user.id]">
-      {{ user.firstName }} {{ user.lastName }}
-    </a>
-  </li>
-</ul>
+@if (loading) {
+  <p>Chargement...</p>
+} @else if (error) {
+  <p class="error">{{ error }}</p>
+} @else {
+  <div class="grid">
+    @for (u of users; track u.id) {
+      <a class="card" [routerLink]="['/users', u.id]">
+        <img class="avatar" [src]="u.image" alt="avatar" />
+        <div>
+          <h3>{{ u.firstName }} {{ u.lastName }}</h3>
+          <p class="muted">{{ u.email }}</p>
+        </div>
+      </a>
+    }
+  </div>
+}

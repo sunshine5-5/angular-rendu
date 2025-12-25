@@ -1,11 +1,34 @@
-<h2>{{ user.firstName }} {{ user.lastName }}</h2>
-<p>Email : {{ user.email }}</p>
+@if (!user && error) {
+  <p class="error">{{ error }}</p>
+} @else if (!user) {
+  <p>Chargement...</p>
+} @else {
+  <div class="header">
+    <img class="avatar" [src]="user!.image" alt="avatar" />
+    <div>
+      <h2>{{ user!.firstName }} {{ user!.lastName }}</h2>
+      <p class="muted">{{ user!.email }} • {{ user!.username }}</p>
+      <p class="muted">{{ user!.phone }}</p>
+    </div>
+  </div>
 
-<h3>Posts de l'utilisateur</h3>
-<ul>
-  <li *ngFor="let post of posts">
-    <a [routerLink]="['/posts', post.id]">
-      {{ post.title }}
-    </a>
-  </li>
-</ul>
+  <h3>Posts de {{ user!.firstName }}</h3>
+
+  @if (loading) {
+    <p>Chargement des posts…</p>
+  } @else {
+    <div class="list">
+      @for (p of posts; track p.id) {
+        <div class="card">
+          <h4>{{ p.title }}</h4>
+          <p class="muted">{{ p.body }}</p>
+          <div class="actions">
+            <a [routerLink]="['/posts', p.id]">Voir post</a>
+          </div>
+        </div>
+      } @empty {
+        <p>Aucun post.</p>
+      }
+    </div>
+  }
+}

@@ -1,34 +1,17 @@
 import { Routes } from '@angular/router';
 
-// USERS
-import { UsersListComponent } from './pages/users/users-list/users-list';
-import { UserDetailComponent } from './pages/users/user-detail/user-detail';
-
-// POSTS
-import { PostsListComponent } from './pages/posts/posts-list/posts-list';
-import { PostDetailComponent } from './pages/posts/post-detail/post-detail';
-
-// PRODUCTS
-import { ProductsListComponent } from './pages/products/products-list/products-list';
-import { ProductDetailComponent } from './pages/products/product-detail/product-detail';
-import { ProductCreateComponent } from './pages/products/product-create/product-create';
-
 export const routes: Routes = [
   { path: '', redirectTo: 'users', pathMatch: 'full' },
 
-  // USERS
-  { path: 'users', component: UsersListComponent },
-  { path: 'users/:id', component: UserDetailComponent },
+  { path: 'users', loadComponent: () => import('./pages/users/users-list/users-list').then(m => m.UsersListComponent) },
+  { path: 'users/:id', loadComponent: () => import('./pages/users/user-detail/user-detail').then(m => m.UserDetailComponent) },
 
-  // POSTS
-  { path: 'posts', component: PostsListComponent },
-  { path: 'posts/:id', component: PostDetailComponent },
+  { path: 'posts', loadComponent: () => import('./pages/posts/posts-list/posts-list').then(m => m.PostsListComponent) },
+  { path: 'posts/:id', loadComponent: () => import('./pages/posts/post-detail/post-detail').then(m => m.PostDetailComponent) },
 
-  // PRODUCTS
-  { path: 'products', component: ProductsListComponent },
-  { path: 'products/new', component: ProductCreateComponent },
-  { path: 'products/:id', component: ProductDetailComponent },
+  { path: 'products', loadComponent: () => import('./pages/products/products-list/products-list').then(m => m.ProductsListComponent) },
+  { path: 'products/new', loadComponent: () => import('./pages/products/product-create/product-create').then(m => m.ProductCreateComponent) },
+  { path: 'products/:id', loadComponent: () => import('./pages/products/product-detail/product-detail').then(m => m.ProductDetailComponent) },
 
-  // Fallback
   { path: '**', redirectTo: 'users' }
 ];
