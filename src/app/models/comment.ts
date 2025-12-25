@@ -5,6 +5,5 @@ export interface Comment {
   user: {
     id: number;
     username: string;
-    fullName?: string;
   };
 }

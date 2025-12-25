@@ -1,60 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Observable, switchMap, map } from 'rxjs';
+
 import { PostService } from '../../../core/services/post';
 import { CommentService } from '../../../core/services/comment';
-import { UserService } from '../../../core/services/user';
 import { Post } from '../../../models/post';
 import { Comment } from '../../../models/comment';
-import { User } from '../../../models/user';
-import { CommonModule } from '@angular/common';
+
+type PostDetailData = {
+  post: Post;
+  comments: Comment[];
+};
 
 @Component({
   selector: 'app-post-detail',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './post-detail.html',
-  styleUrl: './post-detail.css'
+  templateUrl: './post-detail.html'
 })
-export class PostDetailComponent implements OnInit {
-  post?: Post;
-  author?: User;
-  comments: Comment[] = [];
-  loading = true;
-  error = '';
+export class PostDetailComponent {
+  postDetail$!: Observable<PostDetailData>;
 
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
-    private commentService: CommentService,
-    private userService: UserService
-  ) {}
-
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.postService.getPost(id).subscribe({
-      next: (p: Post) => {
-        this.post = p;
-
-        this.userService.getUser(p.userId).subscribe({
-          next: (u: User) => (this.author = u)
-        });
-
-        this.commentService.getCommentsByPost(p.id).subscribe({
-          next: (res) => {
-            this.comments = res.comments;
-            this.loading = false;
-          },
-          error: () => {
-            this.error = "Erreur lors du chargement des commentaires.";
-            this.loading = false;
-          }
-        });
-      },
-      error: () => {
-        this.error = "Post introuvable.";
-        this.loading = false;
-      }
-    });
+    private commentService: CommentService
+  ) {
+    this.postDetail$ = this.route.paramMap.pipe(
+      map((params) => Number(params.get('id'))),
+      switchMap((id) =>
+        this.postService.getPost(id).pipe(
+          switchMap((post) =>
+            this.commentService.getCommentsByPost(id).pipe(
+              map((res) => ({
+                post,
+                comments: res.comments
+              }))
+            )
+          )
+        )
+      )
+    );
   }
 }

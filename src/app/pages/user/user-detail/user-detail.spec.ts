@@ -8,7 +8,7 @@ describe('UserDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserDetailComponent] // standalone component
+      imports: [UserDetailComponent] 
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserDetailComponent);

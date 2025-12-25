@@ -1,19 +1,17 @@
 <h2>Tous les posts</h2>
 
-<p *ngIf="error" class="error">{{ error }}</p>
+<div *ngIf="posts$ | async as data; else loadingTpl">
 
-<div *ngIf="!error">
-  <div *ngFor="let p of posts" class="card">
+  <div *ngFor="let p of data.posts" class="card">
     <h3>{{ p.title }}</h3>
 
-    <p class="muted" *ngIf="p.author">
-      Auteur :
-      <a [routerLink]="['/users', p.author.id]">
-        {{ p.author.firstName }} {{ p.author.lastName }}
-      </a>
-    </p>
-
     <p class="muted">{{ p.body }}</p>
+
     <a [routerLink]="['/posts', p.id]">Détails</a>
   </div>
+
 </div>
+
+<ng-template #loadingTpl>
+  <p class="muted">Chargement des posts…</p>
+</ng-template>

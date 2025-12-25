@@ -1,13 +1,13 @@
-
 <p *ngIf="error" class="error">{{ error }}</p>
 
-<div *ngIf="product && !loading">
+<div *ngIf="product$ | async as product">
+
   <div class="head">
     <h2>{{ product.title }}</h2>
     <a routerLink="/products">← Retour</a>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="save()">
+  <form [formGroup]="form" (ngSubmit)="save(product)">
     <label>Titre</label>
     <input formControlName="title" />
 
@@ -31,9 +31,14 @@
         {{ saving ? 'Enregistrement...' : 'Modifier' }}
       </button>
 
-      <button type="button" class="danger" (click)="remove()">
+      <button
+        type="button"
+        class="danger"
+        (click)="remove(product)"
+      >
         Supprimer
       </button>
     </div>
   </form>
+
 </div>

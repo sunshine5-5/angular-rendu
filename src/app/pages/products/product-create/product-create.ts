@@ -23,7 +23,7 @@ export class ProductCreateComponent implements OnInit {
   loading = false;
   error = '';
 
-  // ✅ Déclaré ici, initialisé dans ngOnInit
+  
   form!: FormGroup;
 
   constructor(
@@ -51,7 +51,6 @@ export class ProductCreateComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    //  Plus de string | null
     const payload: Partial<Product> = this.form.getRawValue();
 
     this.productService.createProduct(payload).subscribe({

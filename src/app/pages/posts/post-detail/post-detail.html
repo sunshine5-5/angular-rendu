@@ -1,28 +1,27 @@
-<p *ngIf="loading">Chargement...</p>
-<p *ngIf="error" class="error">{{ error }}</p>
+<div *ngIf="postDetail$ | async as data; else loadingTpl">
 
-<div *ngIf="post">
+  <!-- post-->
   <div class="card">
-    <h2>{{ post.title }}</h2>
-
-    <p class="muted" *ngIf="author">
-      Auteur :
-      <a [routerLink]="['/users', author.id]">
-        {{ author.firstName }} {{ author.lastName }}
-      </a>
-    </p>
-
-    <p>{{ post.body }}</p>
+    <h2>{{ data.post.title }}</h2>
+    <p>{{ data.post.body }}</p>
   </div>
 
+  <!-- comments -->
   <h3>Commentaires</h3>
 
-  <div *ngIf="comments.length === 0">
-    Aucun commentaire.
+  <p *ngIf="data.comments.length === 0">
+    Aucun commentaire pour ce post.
+  </p>
+
+  <div *ngFor="let c of data.comments" class="card">
+    <p>{{ c.body }}</p>
+    <small class="muted">
+      Auteur : {{ c.user.username }}
+    </small>
   </div>
 
-  <div *ngFor="let c of comments" class="card">
-    <p>{{ c.body }}</p>
-    <small class="muted">— {{ c.user.username }}</small>
-  </div>
 </div>
+
+<ng-template #loadingTpl>
+  <p class="muted">Chargement du post…</p>
+</ng-template>

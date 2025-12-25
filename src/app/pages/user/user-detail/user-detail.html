@@ -1,23 +1,28 @@
-<p *ngIf="error" class="error">{{ error }}</p>
+<div *ngIf="userDetail$ | async as data; else loadingTpl">
 
-
-<div *ngIf="user">
+  <!-- user info-->
   <div class="card">
-    <h2>{{ user.firstName }} {{ user.lastName }}</h2>
-    <p class="muted">{{ user.email }} • {{ user.username }}</p>
+    <h2>{{ data.user.firstName }} {{ data.user.lastName }}</h2>
+    <p class="muted">
+      {{ data.user.email }} • {{ data.user.username }}
+    </p>
   </div>
 
+  <!-- user posts  -->
   <h3>Posts du user</h3>
 
- 
-
-  <div *ngIf="!loading && posts.length === 0">
+  <p *ngIf="data.posts.length === 0">
     Aucun post.
-  </div>
+  </p>
 
-  <div *ngFor="let p of posts" class="card">
+  <div *ngFor="let p of data.posts" class="card">
     <h4>{{ p.title }}</h4>
     <p class="muted">{{ p.body }}</p>
     <a [routerLink]="['/posts', p.id]">Voir le post</a>
   </div>
+
 </div>
+
+<ng-template #loadingTpl>
+  <p class="muted">Chargement de l'utilisateur…</p>
+</ng-template>

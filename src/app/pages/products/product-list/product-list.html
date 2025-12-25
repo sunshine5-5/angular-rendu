@@ -3,16 +3,15 @@
   <a class="btn" routerLink="/products/new">+ Nouveau produit</a>
 </div>
 
-<p *ngIf="loading">Chargement...</p>
-<p *ngIf="error" class="error">{{ error }}</p>
+<ng-container *ngIf="products$ | async as res; else loadingTpl">
+  <div class="grid">
+    <a class="card" *ngFor="let p of res.products" [routerLink]="['/products', p.id]">
+      <h3>{{ p.title }}</h3>
+      <p class="muted">{{ p.price }} €</p>
+    </a>
+  </div>
+</ng-container>
 
-<div class="grid" *ngIf="!loading && !error">
-  <a
-    class="card"
-    *ngFor="let p of products"
-    [routerLink]="['/products', p.id]"
-  >
-    <h3>{{ p.title }}</h3>
-    <p class="muted">{{ p.price }} €</p>
-  </a>
-</div>
+<ng-template #loadingTpl>
+  <p>Chargement...</p>
+</ng-template>
